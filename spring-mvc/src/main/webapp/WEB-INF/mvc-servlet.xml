@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.springframework.org/schema/beans"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xsi:schemaLocation="
+               http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+               http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+             ">
+    <!-- request - controller -->
+	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
+	<!-- autodetect components -->
+	<context:component-scan base-package="com.tiemei.demo.spring.mvc.controller" />
+	
+	<!-- controller - view -->
+	<!-- 
+		UrlBasedViewResolver InternalBasedViewResolver 不要给过高的优先级，因为它们找不到视图，
+		也不会给予轮询其他viewResolver的机会。
+		id="viewResolver"优先级最低
+	-->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!-- vm -->
+	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath" value="/WEB-INF/velocity/" />
+	</bean>
+	<bean id="vmViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+		<property name="suffix" value=".vm" />
+		<property name="order" value="1" />
+	</bean>
+</beans>

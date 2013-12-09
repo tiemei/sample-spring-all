@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
+
+	<aop:aspectj-autoproxy />
+
+	<bean id="customerBo" class="com.tiemei.demo.spring.aop.base.CustomerBoImpl" />
+
+	<!-- Aspect -->
+	<bean id="logAspect" class="com.tiemei.demo.spring.aop.aspectj.LoggingAspect" />
+	
+	<!-- interceptor -->
+	<bean id="serviceA" class="com.tiemei.demo.spring.aop.interceptor.ServiceA" />
+	<bean id="myInterceptor" class="com.tiemei.demo.spring.aop.interceptor.MyInterceptor" />
+	<!-- 
+	<bean id="serviceAProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+ 
+		<property name="target" ref="serviceA" />
+ 
+		<property name="interceptorNames">
+			<list>
+				<value>myInterceptor</value>
+			</list>
+		</property>
+	</bean>
+	 -->
+	
+	<aop:config>
+		<!--切入点-->
+		<aop:pointcut id="testPoint" expression="execution(public * com.tiemei.demo.spring.aop.interceptor.Service*.*(..)) " />
+		<!--在该切入点使用自定义拦截器-->
+		<aop:advisor pointcut-ref="testPoint" advice-ref="myInterceptor" />
+	</aop:config>
+	
+</beans>

@@ -1,0 +1,4 @@
+1. new a foler A
+2. new a pom file in A
+3. new a maven project B in folder A/B(在new maven project的时候，选择worspace location为 A/B)
+4. 修改B的parent pom为A的pom

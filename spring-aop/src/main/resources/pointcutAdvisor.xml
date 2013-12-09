@@ -1,0 +1,21 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
+	
+	<bean id="targetClass" class="com.tiemei.demo.spring.aop.advice.CustomerService" />
+	<bean id="interceptor" class="com.tiemei.demo.spring.aop.pointcutAdvisor.MyInterceptor" />
+	
+	<bean id="targetClassProxy" 
+                 class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="targetClass" />
+ 
+		<property name="interceptorNames">
+			<list>
+				<value>interceptor</value>
+			</list>
+		</property>
+	</bean>
+</beans>
